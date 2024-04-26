@@ -7,38 +7,38 @@
         </header>
         <div class="input-section grid grid-cols-4 md:grid-cols-5 gap-2">
           <div class="field">
-            <label for="hour">Hs:</label>
+            <label class="block" for="hour">Hs:</label>
           </div>
           <div class="field">
-            <label for="minute">Min:</label>
+            <label class="block" for="minute">Min:</label>
           </div>
           <div class="field">
-            <label for="second">Seg:</label>
+            <label class="block" for="second">Seg:</label>
           </div>
         </div>
         <div v-for="(input, index) in inputs" :key="index" class="input-section grid grid-cols-4 md:grid-cols-5 gap-1 mb-2">
           <div class="field">
-            <input class="w-full" type="number" v-model="input.hour" @input="updateSubtotal">
+            <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="number" v-model="input.hour" @input="updateSubtotal">
           </div>
           <div class="field">
-            <input class="w-full" type="number" v-model="input.minute" @input="updateSubtotal">
+            <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="number" v-model="input.minute" @input="updateSubtotal">
           </div>
           <div class="field">
-            <input class="w-full" type="number" v-model="input.second" @input="updateSubtotal">
+            <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="number" v-model="input.second" @input="updateSubtotal">
           </div>
           <div class="field">
-            <button title="Remover" @click="removeInput(index)" class="remove-btn font-sans font-semibold">
-              <svg title="Remover" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-6">
+            <button title="Remover" @click="removeInput(index)" class="border-0 font-sans font-semibold bg-red-600 rounded cursor-pointer py-2 px-2.5">
+              <svg title="Remover" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-6 text-white">
                 <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z" clip-rule="evenodd" />
               </svg>
             </button>
           </div>
         </div>
-        <button @click="addInput" class="add-btn bg-sky-500 mt-2 mb-4 font-sans font-semibold">Adicionar Campo</button>
+        <button @click="addInput" class="border-0 bg-sky-500 mt-2 mb-4 font-sans font-semibold text-white rounded cursor-pointer py-2 px-2.5">Adicionar Campo</button>
         <div class="operation-section">
           <div class="field mb-4">
-            <label for="operation" class="mb-1">Operação:</label>
-            <select v-model="operation" id="operation">
+            <label for="operation" class="block mb-1">Operação:</label>
+            <select class="p-2 rounded border border-solid border-sky-500 leading-none" v-model="operation" id="operation">
               <option value="add">Somar</option>
               <option value="subtract">Subtrair</option>
               <option value="multiply">Multiplicar</option>
@@ -47,32 +47,32 @@
           </div>
         </div>
   
-        <div v-if="operation === 'divide'" class="subtotal-section mb-4">
+        <div v-if="operation === 'divide'" class="flex mb-4">
           <div class="field mr-2">
-            <label for="subtotal">Subtotal:</label>
-            <input class="w-full" type="text" :value="formatTime(subtotal)" id="subtotal" disabled>
+            <label class="block" for="subtotal">Subtotal:</label>
+            <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="text" :value="formatTime(subtotal)" id="subtotal" disabled>
           </div>
 
           <div class="field">
-            <label for="divisor">Divisor:</label>
-            <input class="w-full" type="number" v-model="divisor" id="divisor">
+            <label class="block" for="divisor">Divisor:</label>
+            <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="number" v-model="divisor" id="divisor">
           </div>
         </div>
-        <div v-if="operation === 'multiply'" class="subtotal-section multiplier-section mb-4">
+        <div v-if="operation === 'multiply'" class="flex multiplier-section mb-4">
           <div class="field mr-2">
             <label for="subtotal">Subtotal:</label>
-            <input class="w-full" type="text" :value="formatTime(subtotal)" id="subtotal" disabled>
+            <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="text" :value="formatTime(subtotal)" id="subtotal" disabled>
           </div>
           
           <div class="field">
-            <label for="multiplier">Multiplicador:</label>
-            <input class="w-full" type="number" v-model="multiplier" id="multiplier">
+            <label class="block" for="multiplier">Multiplicador:</label>
+            <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="number" v-model="multiplier" id="multiplier">
           </div>
         </div>
 
         <div class="operation-section grid grid-cols-4 md:grid-cols-5 gap-2">
           <div class="field col-start-4">
-            <button @click="calculate" class="calculate-btn bg-sky-500 font-sans font-semibold">Calcular</button>
+            <button @click="calculate" class="border-0 bg-sky-500 font-sans font-semibold text-white rounded cursor-pointer py-2 px-2.5">Calcular</button>
           </div>
         </div>
       </div>
@@ -84,12 +84,12 @@
         </div>
         <div class="vam-section mb-4">
           <label for="vam">Inserir minha VAM:</label>
-          <input class="w-full" type="text" v-model="vam" id="vam">
+          <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="text" v-model="vam" id="vam">
         </div>
         <div class="share-section">
           <p>Texto para compartilhar o seu treino:</p>
           <p class="font-sans font-semibold text-sky-500"><small>Clicando no bloco, você consegue editar o texto.</small></p>
-          <div class="template-share" contenteditable="true">
+          <div class="template-share p-2 rounded border border-solid border-sky-500" contenteditable="true">
             <p>Treino:</p>
             <p>VAM abaixo de {{ vam }}</p>
             <p>Feito: {{ formatTemplateTime(result) }}</p>
@@ -190,53 +190,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.input-section input {
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-
-.field label {
-  display: block;
-}
-
-.operation-section select {
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-
-.subtotal-section {
-  display: flex;
-}
-
-.template-share,
-.subtotal-section input,
-.divisor-section input,
-.multiplier-section input,
-.vam-section input {
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-
-.add-btn,
-.remove-btn,
-.calculate-btn {
-  color: white;
-  padding: 9px 11px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.remove-btn {
-  background-color: #c90000;
-}
-
-.remove-btn:hover {
-  background-color: #a30000;
-}
-</style>
