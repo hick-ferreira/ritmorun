@@ -5,28 +5,33 @@
         <header class="text-left mb-4">
           <h2 class="font-sans px-2 py-1 bg-sky-500 text-base font-semibold tracking-widest text-black uppercase inline-block text-white">Calcule o seu treino</h2>
         </header>
-        <div class="input-section grid grid-cols-4 md:grid-cols-5 gap-2">
-          <div class="field">
-            <label class="block" for="hour">Hs:</label>
+        <div>
+          <label class="font-sans font-semibold block" for="laps">Quantidade de voltas:</label>
+          <input class="w-full md:w-2/12 p-2 rounded border border-solid border-sky-500 leading-none" type="number" v-model="number"  @blur="validateNumberLaps" id="laps" min="0" max="50">
+          <span v-if="showErrorMessage" class="block font-sans font-semibold text-red-600">O valor deve estar entre 0 e 50.</span>
+        </div>
+        <div v-show="number === undefined || number > 0" class="input-section grid grid-cols-4 md:grid-cols-5 gap-2 mt-4">
+          <div>
+            <label class="font-sans font-semibold block" for="hour">Hs:</label>
           </div>
-          <div class="field">
-            <label class="block" for="minute">Min:</label>
+          <div>
+            <label class="font-sans font-semibold block" for="minute">Min:</label>
           </div>
-          <div class="field">
-            <label class="block" for="second">Seg:</label>
+          <div>
+            <label class="font-sans font-semibold block" for="second">Seg:</label>
           </div>
         </div>
-        <div v-for="(input, index) in inputs" :key="index" class="input-section grid grid-cols-4 md:grid-cols-5 gap-1 mb-2">
-          <div class="field">
+        <div v-for="(input, index) in inputs" :key="index" class="input-section grid grid-cols-4 md:grid-cols-5 gap-1 mb-4">
+          <div>
             <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="number" v-model="input.hour" @input="updateSubtotal">
           </div>
-          <div class="field">
+          <div>
             <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="number" v-model="input.minute" @input="updateSubtotal">
           </div>
-          <div class="field">
+          <div>
             <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="number" v-model="input.second" @input="updateSubtotal">
           </div>
-          <div class="field">
+          <div>
             <button title="Remover" @click="removeInput(index)" class="border-0 font-sans font-semibold bg-red-600 rounded cursor-pointer py-2 px-2.5">
               <svg title="Remover" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-6 text-white">
                 <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z" clip-rule="evenodd" />
@@ -34,13 +39,13 @@
             </button>
           </div>
         </div>
-        <button @click="addInput" class="border-0 bg-sky-500 mt-2 mb-4 font-sans font-semibold text-white rounded cursor-pointer py-2 px-2.5">Adicionar Campo</button>
-        <div class="operation-section">
+        <!-- <button @click="addInput" class="border-0 bg-sky-500 mt-2 mb-4 font-sans font-semibold text-white rounded cursor-pointer py-2 px-2.5">Adicionar Campo</button> -->
+        <div class="operation-section mt-4">
           <div class="field mb-4">
-            <label for="operation" class="block mb-1">Operação:</label>
+            <label for="operation" class="font-sans font-semibold block mb-1">Operação:</label>
             <select class="p-2 rounded border border-solid border-sky-500 leading-none" v-model="operation" id="operation">
               <option value="add">Somar</option>
-              <option value="subtract">Subtrair</option>
+              <!-- <option value="subtract">Subtrair</option> -->
               <option value="multiply">Multiplicar</option>
               <option value="divide">Dividir</option>
             </select>
@@ -49,23 +54,23 @@
   
         <div v-if="operation === 'divide'" class="flex mb-4">
           <div class="field mr-2">
-            <label class="block" for="subtotal">Subtotal:</label>
+            <label class="font-sans font-semibold block" for="subtotal">Subtotal:</label>
             <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="text" :value="formatTime(subtotal)" id="subtotal" disabled>
           </div>
 
-          <div class="field">
-            <label class="block" for="divisor">Divisor:</label>
+          <div>
+            <label class="font-sans font-semibold block" for="divisor">Divisor:</label>
             <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="number" v-model="divisor" id="divisor">
           </div>
         </div>
         <div v-if="operation === 'multiply'" class="flex multiplier-section mb-4">
           <div class="field mr-2">
-            <label for="subtotal">Subtotal:</label>
+            <label class="font-sans font-semibold" for="subtotal">Subtotal:</label>
             <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="text" :value="formatTime(subtotal)" id="subtotal" disabled>
           </div>
           
-          <div class="field">
-            <label class="block" for="multiplier">Multiplicador:</label>
+          <div>
+            <label class="font-sans font-semibold block" for="multiplier">Multiplicador:</label>
             <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="number" v-model="multiplier" id="multiplier">
           </div>
         </div>
@@ -79,21 +84,22 @@
 
       <div class="md:w-12/12 md:w-10/12 flex-inline flex-col mt-2 md:mt-0">
         <div class="mb-6">
-          <p class="text-sky-500 font-sans font-semibold tracking-widest text-black uppercase mb-4">Resultado:</p>
-          <p>{{ formatTemplateTime(result) }}</p>
+          <p class="text-sky-500 font-sans font-semibold tracking-widest text-black uppercase mb-2">Resultado:</p>
+          <p class="font-sans font-semibold">{{ formatTemplateTime(result) }}</p>
         </div>
         <div class="vam-section mb-4">
-          <label for="vam">Inserir minha VAM:</label>
+          <label class="font-sans font-semibold" for="vam">Inserir minha VAM:</label>
           <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="text" v-model="vam" id="vam">
         </div>
         <div class="share-section">
-          <p>Texto para compartilhar o seu treino:</p>
+          <p class="font-sans font-semibold">Texto para compartilhar o seu treino:</p>
           <p class="font-sans font-semibold text-sky-500"><small>Clicando no bloco, você consegue editar o texto.</small></p>
-          <div class="template-share p-2 rounded border border-solid border-sky-500" contenteditable="true">
+          <div class="template-share p-2 rounded border border-solid border-sky-500 mb-2" contenteditable="true">
             <p>Treino:</p>
             <p>VAM abaixo de {{ vam }}</p>
             <p>Feito: {{ formatTemplateTime(result) }}</p>
           </div>
+          <button class="border-0 bg-sky-500 font-sans font-semibold text-white rounded cursor-pointer py-2 px-2.5 float-end" @click="shareOnWhatsApp">Compartilhar no WhatsApp</button>
         </div>
       </div>
     </div>
@@ -111,7 +117,9 @@ export default {
       divisor: 1,
       multiplier: 1,
       result: 0,
-      vam: '',
+      vam: null,
+      numbem: null,
+      showErrorMessage: false
     };
   },
   computed: {
@@ -147,6 +155,28 @@ export default {
       const minutos = Math.floor(segundos / 60);
       const segundosRestantes = segundos % 60;
       return `${minutos}'${segundosRestantes.toString().padStart(2, '0')}"`;
+    },
+    validateNumberLaps() {
+      if (this.number < 0 || this.number > 50) {
+        this.showErrorMessage = true;
+      } else {
+        this.showErrorMessage = false;
+        this.numberLaps();
+      }
+    },
+    numberLaps() {
+      const currentInputs = this.inputs.length;
+      const targetInputs = parseInt(this.number);
+
+      if (currentInputs < targetInputs) {
+        const inputsToAdd = targetInputs - currentInputs;
+        for (let i = 0; i < inputsToAdd; i++) {
+          this.addInput();
+        }
+      } else if (currentInputs > targetInputs) {
+        const inputsToRemove = currentInputs - targetInputs;
+        this.inputs.splice(targetInputs, inputsToRemove);
+      }
     },
     calculate() {
       let totalSeconds = 0;
@@ -186,6 +216,20 @@ export default {
 
       this.result = hours * 3600 + minutes * 60 + seconds;
       
+    },
+    shareOnWhatsApp() {
+      const templateDiv = document.querySelector('.template-share');
+      const textToShare = Array.from(templateDiv.querySelectorAll('p'))
+        .map(p => p.textContent.trim())
+        .join('\n');
+
+      navigator.clipboard.writeText(textToShare)
+        .then(() => {
+          window.open('https://wa.me/?text=' + 'http://ritmorun.com/%0A' + encodeURIComponent(textToShare), '_blank');
+        })
+        .catch(err => {
+          console.error('Erro ao copiar texto:', err);
+        });
     }
   }
 };
