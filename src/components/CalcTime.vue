@@ -223,13 +223,18 @@ export default {
         .map(p => p.textContent.trim())
         .join('\n');
 
-      navigator.clipboard.writeText(textToShare)
-        .then(() => {
-          window.open('https://wa.me/?text=' + encodeURIComponent(textToShare + '\n' + 'Calcule seu treino: http://ritmorun.com'), '_blank');
-        })
-        .catch(err => {
-          console.error('Erro ao copiar texto:', err);
-        });
+      try {
+        if (navigator.share) {
+          navigator.share({
+            text: textToShare + '\n' + 'Calcule seu treino: http://ritmorun.com'
+          });
+        } else {
+          const shareUrl = 'https://wa.me/?text=' + encodeURIComponent(textToShare + '\n' + 'Calcule seu treino: http://ritmorun.com');
+          window.open(shareUrl, '_blank');
+        }
+      } catch (error) {
+        console.error('Erro ao compartilhar:', error);
+      }
     }
   }
 };
