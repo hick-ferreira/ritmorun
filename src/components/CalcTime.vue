@@ -59,8 +59,8 @@
           </div>
 
           <div>
-            <label class="font-sans font-semibold block" for="divisor">Divisor:</label>
-            <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="number" v-model="divisor" id="divisor">
+            <label class="font-sans font-semibold block" for="divider">Divisor:</label>
+            <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="number" v-model="number" id="divider">
           </div>
         </div>
         <div v-if="operation === 'multiply'" class="flex multiplier-section mb-4">
@@ -99,7 +99,7 @@
             <p>VAM abaixo de {{ vam }}</p>
             <p>Feito: {{ formatTemplateTime(result) }}</p>
           </div>
-          <button class="border-0 bg-sky-500 font-sans font-semibold text-white rounded cursor-pointer py-2 px-2.5 float-end" @click="shareOnWhatsApp">Compartilhar no WhatsApp</button>
+          <button class="border-0 bg-sky-500 font-sans font-semibold text-white rounded cursor-pointer py-2 px-2.5 float-end" @click="shareOnWhatsApp">Compartilhar</button>
         </div>
       </div>
     </div>
@@ -114,7 +114,7 @@ export default {
       inputs: [{ hour: 0, minute: 0, second: 0 }],
       operation: 'add',
       subtotal: 0,
-      divisor: 1,
+      divider: 1,
       multiplier: 1,
       result: 0,
       vam: null,
@@ -194,7 +194,7 @@ export default {
           totalSeconds = this.calculateSubtotal * this.multiplier;
           break;
         case 'divide':
-          totalSeconds = this.calculateSubtotal / this.divisor;
+          totalSeconds = this.calculateSubtotal / this.number;
           break;
         default:
           totalSeconds = 0;
