@@ -118,7 +118,7 @@ export default {
       multiplier: 1,
       result: 0,
       vam: null,
-      numbem: null,
+      number: null,
       showErrorMessage: false
     };
   },
