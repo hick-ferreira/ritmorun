@@ -10,7 +10,7 @@
           <input class="w-full md:w-2/12 p-2 rounded border border-solid border-sky-500 leading-none" type="number" v-model="number"  @blur="validateNumberLaps" id="laps" min="0" max="50">
           <span v-if="showErrorMessage" class="block font-sans font-semibold text-red-600">O valor deve estar entre 0 e 50.</span>
         </div>
-        <div v-show="number === undefined || number > 0" class="input-section grid grid-cols-4 md:grid-cols-5 gap-2 mt-4">
+        <div v-show="number === null || number > 0" class="input-section grid grid-cols-4 md:grid-cols-5 gap-2 mt-4">
           <div>
             <label class="font-sans font-semibold block" for="hour">Hs:</label>
           </div>
@@ -128,6 +128,9 @@ export default {
         return acc + input.hour * 3600 + input.minute * 60 + input.second;
       }, 0);
     }
+  },
+  mounted() {
+    console.log(this.number)
   },
   methods: {
     addInput() {
