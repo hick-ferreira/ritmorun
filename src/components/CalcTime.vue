@@ -96,7 +96,8 @@
           <p class="font-sans font-semibold text-sky-500"><small>Clicando no bloco, você consegue editar o texto.</small></p>
           <div class="template-share p-2 rounded border border-solid border-sky-500 mb-2" contenteditable="true">
             <p>Treino:</p>
-            <p>VAM abaixo de {{ vam }}</p>
+            <p v-if="number != null">{{ number }}x</p>
+            <p>VAM: {{ vam }}</p>
             <p>Feito: {{ formatTemplateTime(result) }}</p>
           </div>
           <button class="border-0 bg-sky-500 font-sans font-semibold text-white rounded cursor-pointer py-2 px-2.5 float-end" @click="shareOnWhatsApp">Compartilhar</button>
@@ -128,9 +129,6 @@ export default {
         return acc + input.hour * 3600 + input.minute * 60 + input.second;
       }, 0);
     }
-  },
-  mounted() {
-    console.log(this.number)
   },
   methods: {
     addInput() {
