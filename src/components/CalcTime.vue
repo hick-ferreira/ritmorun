@@ -6,8 +6,12 @@
           <h2 class="font-sans px-2 py-1 bg-sky-500 text-base font-semibold tracking-widest text-black uppercase inline-block text-white">Calcule o seu treino</h2>
         </header>
         <div>
+          <label class="font-sans font-semibold block" for="distance">Distância do intervalo/volta:</label>
+          <input class="w-full md:w-3/12 p-2 rounded border border-solid border-sky-500 leading-none mb-4" type="text" v-model="distance" id="distance">
+        </div>
+        <div>
           <label class="font-sans font-semibold block" for="laps">Quantidade de voltas:</label>
-          <input class="w-full md:w-2/12 p-2 rounded border border-solid border-sky-500 leading-none" type="number" v-model="number"  @blur="validateNumberLaps" id="laps" min="0" max="50">
+          <input class="w-full md:w-3/12 p-2 rounded border border-solid border-sky-500 leading-none" type="number" v-model="number"  @blur="validateNumberLaps" id="laps" min="0" max="50">
           <span v-if="showErrorMessage" class="block font-sans font-semibold text-red-600">O valor deve estar entre 0 e 50.</span>
         </div>
         <div v-show="number === null || number > 0" class="input-section grid grid-cols-4 md:grid-cols-5 gap-2 mt-4">
@@ -21,7 +25,7 @@
             <label class="font-sans font-semibold block" for="second">Seg:</label>
           </div>
         </div>
-        <div v-for="(input, index) in inputs" :key="index" class="input-section grid grid-cols-4 md:grid-cols-5 gap-1 mb-4">
+        <div v-show="number === null || number > 0" v-for="(input, index) in inputs" :key="index" class="input-section grid grid-cols-4 md:grid-cols-5 gap-1 mb-4">
           <div>
             <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="number" v-model="input.hour" @input="updateSubtotal">
           </div>
@@ -96,7 +100,7 @@
           <p class="font-sans font-semibold text-sky-500"><small>Clicando no bloco, você consegue editar o texto.</small></p>
           <div class="template-share p-2 rounded border border-solid border-sky-500 mb-2" contenteditable="true">
             <p>Treino:</p>
-            <p v-if="number != null">{{ number }}x</p>
+            <p v-if="number != null">{{ number }}x <span v-if="distance">{{ distance }}</span></p>
             <p>VAM: {{ vam }}</p>
             <p>Feito: {{ formatTemplateTime(result) }}</p>
           </div>
@@ -120,6 +124,7 @@ export default {
       result: 0,
       vam: null,
       number: null,
+      distance: null,
       showErrorMessage: false
     };
   },
