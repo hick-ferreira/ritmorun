@@ -5,16 +5,19 @@
         <header class="text-left mb-4">
           <h2 class="font-sans px-2 py-1 bg-sky-500 text-base font-semibold tracking-widest text-black uppercase inline-block text-white">Calcule o seu treino</h2>
         </header>
-        <div>
-          <label class="font-sans font-semibold block" for="distance">Distância do intervalo/volta:</label>
-          <input class="w-full md:w-3/12 p-2 rounded border border-solid border-sky-500 leading-none mb-4" type="text" v-model="distance" id="distance">
+        <div class="flex">
+          <div class="mr-2">
+            <label class="font-sans font-semibold block" for="distance">Dist. do intervalo/volta:</label>
+            <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="text" v-model="distance" id="distance">
+          </div>
+          
+          <div>
+            <label class="font-sans font-semibold block" for="laps">Nº de voltas:</label>
+            <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="number" v-model="number"  @blur="validateNumberLaps" id="laps" min="0" max="50">
+            <span v-if="showErrorMessage" class="block font-sans font-semibold text-red-600">O valor deve estar entre 0 e 50.</span>
+          </div>
         </div>
-        <div>
-          <label class="font-sans font-semibold block" for="laps">Quantidade de voltas:</label>
-          <input class="w-full md:w-3/12 p-2 rounded border border-solid border-sky-500 leading-none" type="number" v-model="number"  @blur="validateNumberLaps" id="laps" min="0" max="50">
-          <span v-if="showErrorMessage" class="block font-sans font-semibold text-red-600">O valor deve estar entre 0 e 50.</span>
-        </div>
-        <div v-show="number === null || number > 0" class="input-section grid grid-cols-4 md:grid-cols-5 gap-2 mt-4">
+        <div v-show="number === null || number > 0" class="grid grid-cols-4 md:grid-cols-5 gap-2 mt-4">
           <div>
             <label class="font-sans font-semibold block" for="hour">Hs:</label>
           </div>
@@ -25,7 +28,7 @@
             <label class="font-sans font-semibold block" for="second">Seg:</label>
           </div>
         </div>
-        <div v-show="number === null || number > 0" v-for="(input, index) in inputs" :key="index" class="input-section grid grid-cols-4 md:grid-cols-5 gap-1 mb-4">
+        <div v-show="number === null || number > 0" v-for="(input, index) in inputs" :key="index" class="grid grid-cols-4 md:grid-cols-5 gap-1 mb-4">
           <div>
             <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="number" v-model="input.hour" @input="updateSubtotal">
           </div>
@@ -44,8 +47,8 @@
           </div>
         </div>
         <!-- <button @click="addInput" class="border-0 bg-sky-500 mt-2 mb-4 font-sans font-semibold text-white rounded cursor-pointer py-2 px-2.5">Adicionar Campo</button> -->
-        <div class="operation-section mt-4">
-          <div class="field mb-4">
+        <div class="mt-4">
+          <div class="mb-4">
             <label for="operation" class="font-sans font-semibold block mb-1">Operação:</label>
             <select class="p-2 rounded border border-solid border-sky-500 leading-none" v-model="operation" id="operation">
               <option value="add">Somar</option>
@@ -57,7 +60,7 @@
         </div>
   
         <div v-if="operation === 'divide'" class="flex mb-4">
-          <div class="field mr-2">
+          <div class="mr-2">
             <label class="font-sans font-semibold block" for="subtotal">Subtotal:</label>
             <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="text" :value="formatTime(subtotal)" id="subtotal" disabled>
           </div>
@@ -68,7 +71,7 @@
           </div>
         </div>
         <div v-if="operation === 'multiply'" class="flex multiplier-section mb-4">
-          <div class="field mr-2">
+          <div class="mr-2">
             <label class="font-sans font-semibold" for="subtotal">Subtotal:</label>
             <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="text" :value="formatTime(subtotal)" id="subtotal" disabled>
           </div>
@@ -79,8 +82,8 @@
           </div>
         </div>
 
-        <div class="operation-section grid grid-cols-4 md:grid-cols-5 gap-2">
-          <div class="field col-start-4">
+        <div class="grid grid-cols-4 md:grid-cols-5 gap-2">
+          <div class="col-start-4">
             <button @click="calculate" class="border-0 bg-sky-500 font-sans font-semibold text-white rounded cursor-pointer py-2 px-2.5">Calcular</button>
           </div>
         </div>
@@ -91,7 +94,7 @@
           <p class="text-sky-500 font-sans font-semibold tracking-widest text-black uppercase mb-2">Resultado:</p>
           <p class="font-sans font-semibold">{{ formatTemplateTime(result) }}</p>
         </div>
-        <div class="vam-section mb-4">
+        <div class="mb-4">
           <label class="font-sans font-semibold" for="vam">Inserir minha VAM:</label>
           <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="text" v-model="vam" id="vam">
         </div>
