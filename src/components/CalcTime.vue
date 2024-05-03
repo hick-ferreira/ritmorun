@@ -12,7 +12,7 @@
           </div>
           
           <div>
-            <label class="font-sans font-semibold block" for="laps">Nº de voltas:</label>
+            <label class="font-sans font-semibold block" for="laps">Nº Voltas:</label>
             <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="number" v-model="number"  @blur="validateNumberLaps" id="laps" min="0" max="50">
             <span v-if="showErrorMessage" class="block font-sans font-semibold text-red-600">O valor deve estar entre 0 e 50.</span>
           </div>
