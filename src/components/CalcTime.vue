@@ -5,14 +5,14 @@
         <header class="text-left mb-4">
           <h2 class="font-sans px-2 py-1 bg-sky-500 text-base font-semibold tracking-widest text-black uppercase inline-block text-white">Calcule o seu treino</h2>
         </header>
-        <div class="flex">
-          <div class="w-5/12 mr-2">
-            <label class="font-sans font-semibold block" for="distance">Dist. do intervalo/volta:</label>
+        <div class="flex items-end">
+          <div class="w-6/12 md:w-5/12 mr-2">
+            <label class="font-sans font-semibold block leading-4 mb-1" for="distance">Dist. do intervalo/volta:</label>
             <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="text" v-model="distance" id="distance">
           </div>
           
-          <div class="w-2/12">
-            <label class="font-sans font-semibold block" for="laps">Nº Voltas:</label>
+          <div class="w-6/12 md:w-2/12">
+            <label class="font-sans font-semibold block leading-4 mb-1" for="laps">Nº de Voltas:</label>
             <input class="w-full p-2 rounded border border-solid border-sky-500 leading-none" type="number" v-model="number"  @blur="validateNumberLaps" id="laps" min="0" max="50">
             <span v-if="showErrorMessage" class="block font-sans font-semibold text-red-600">O valor deve estar entre 0 e 50.</span>
           </div>
